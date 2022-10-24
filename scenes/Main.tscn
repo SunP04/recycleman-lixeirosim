@@ -1,0 +1,138 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://scenes/Carro.tscn" type="PackedScene" id=1]
+[ext_resource path="res://art/cenario/mid.jpeg" type="Texture" id=2]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/Main.gd" type="Script" id=4]
+[ext_resource path="res://scenes/Lixos.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/LixoLaranja.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/LixoVermelho.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/LixoVerde.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/LixoAzul.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/LixoAmarelo.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scripts/Game.gd" type="Script" id=12]
+[ext_resource path="res://scripts/CacambaGrid.gd" type="Script" id=13]
+[ext_resource path="res://fonts/Xolonium-Regular.ttf" type="DynamicFontData" id=14]
+[ext_resource path="res://scenes/GameOver.tscn" type="PackedScene" id=15]
+[ext_resource path="res://sounds/bg-music.wav" type="AudioStream" id=16]
+
+[sub_resource type="DynamicFont" id=1]
+size = 75
+font_data = ExtResource( 14 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 60
+font_data = ExtResource( 14 )
+
+[node name="Main" type="Node"]
+script = ExtResource( 4 )
+
+[node name="HUD" parent="." instance=ExtResource( 11 )]
+
+[node name="Game" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1500.0
+margin_bottom = 1100.0
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Cenario" type="Sprite" parent="Game"]
+position = Vector2( 752, 553 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CacambaLixos" type="HBoxContainer" parent="Game"]
+margin_left = 756.0
+margin_top = 482.0
+margin_right = 1495.0
+margin_bottom = 717.0
+script = ExtResource( 13 )
+
+[node name="LixoVermelho" parent="Game/CacambaLixos" instance=ExtResource( 7 )]
+position = Vector2( 665, 98 )
+
+[node name="LixoAzul" parent="Game/CacambaLixos" instance=ExtResource( 9 )]
+position = Vector2( 534, 90 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="LixoAmarelo" parent="Game/CacambaLixos" instance=ExtResource( 10 )]
+position = Vector2( 403, 84 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="LixoLaranja" parent="Game/CacambaLixos" instance=ExtResource( 6 )]
+position = Vector2( 267, 74 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="LixoVerde" parent="Game/CacambaLixos" instance=ExtResource( 8 )]
+position = Vector2( 129, 63 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Lixos" parent="Game" instance=ExtResource( 5 )]
+position = Vector2( 670, 960 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Carro" parent="Game" instance=ExtResource( 1 )]
+position = Vector2( 1824, 876 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Player" parent="Game" instance=ExtResource( 3 )]
+position = Vector2( 514, 788 )
+script = null
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ScoreLabel" type="Label" parent="Game"]
+margin_right = 332.0
+margin_bottom = 91.0
+custom_fonts/font = SubResource( 1 )
+text = "Score: "
+
+[node name="ScoreValue" type="Label" parent="Game/ScoreLabel"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -60.0
+margin_top = -30.5
+margin_right = -17.0
+margin_bottom = 42.5
+custom_fonts/font = SubResource( 2 )
+text = "0"
+align = 1
+
+[node name="BgSound" type="AudioStreamPlayer" parent="Game"]
+stream = ExtResource( 16 )
+
+[node name="GameOver" parent="." instance=ExtResource( 15 )]
+visible = false
+
+[connection signal="start_game" from="HUD" to="." method="start_game"]
+[connection signal="game_over" from="Game" to="." method="_on_Game_game_over"]
+[connection signal="cacamba_hit" from="Game/CacambaLixos" to="." method="_on_cacamba_hit"]
+[connection signal="hit_trash" from="Game/CacambaLixos/LixoVermelho" to="Game/CacambaLixos" method="on_hit"]
+[connection signal="hit_trash" from="Game/CacambaLixos/LixoAzul" to="Game/CacambaLixos" method="on_hit"]
+[connection signal="hit_trash" from="Game/CacambaLixos/LixoAmarelo" to="Game/CacambaLixos" method="on_hit"]
+[connection signal="hit_trash" from="Game/CacambaLixos/LixoLaranja" to="Game/CacambaLixos" method="on_hit"]
+[connection signal="hit_trash" from="Game/CacambaLixos/LixoVerde" to="Game/CacambaLixos" method="on_hit"]
+[connection signal="carro_game_over" from="Game/Carro" to="Game" method="_on_Carro_carro_game_over"]
+[connection signal="restart_game" from="GameOver" to="." method="_on_GameOver_restart_game"]
