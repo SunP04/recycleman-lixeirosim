@@ -1,15 +1,17 @@
 extends KinematicBody2D
 
-const POSSIBLE_TRASH = ["metal", "papel", "plastico", "pilha"]
+const POSSIBLE_TRASH = ["metal", "papel", "plastico", "pilha", "vidro"]
 var screen_size: Vector2
 
 onready var DEFAULT_POS = position
 
-var speed = 500
+var speed = 570
+var rotationSpeed = .75
 var target = Vector2()
 var velocity = Vector2()
 var timesClicked = 0
 var shouldMove = false
+var rotationDir = 0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -27,7 +29,10 @@ func _physics_process(_d):
         $MovingTimer.start()
     if (target - position) == Vector2.ZERO:
         shouldMove = false
+        rotation = 0
     if shouldMove:
+        rotationDir -= 1
+        rotation += rotationDir * rotationSpeed
         velocity = (target - position).normalized() * speed
         if (target - position).length() > 5:
             velocity = move_and_slide(velocity)
@@ -43,6 +48,7 @@ func reset() -> void:
     position = DEFAULT_POS
     shouldMove = false
     timesClicked = 0
+    rotationDir = 0 
 
 
 func _on_MovingTimer_timeout() -> void:

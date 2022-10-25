@@ -5,7 +5,8 @@ const LIXOS_SCORING = {
     "metal": "LixoAmarelo",
     "papel": "LixoAzul",
     "plastico": "LixoVermelho",
-    'pilha': "LixoLaranja"
+    'pilha': "LixoLaranja",
+    'vidro': "LixoVerde"
 }
 
 export (int) var score
@@ -16,6 +17,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+    if Input.is_action_pressed("quit"):
+        get_tree().quit(0)
     if not $Game.visible:
         return
     var lixo_pos = $Game/Lixos.position
@@ -73,3 +76,7 @@ func _on_GameOver_restart_game() -> void:
     print("[%s] Restart game event triggered." % [$GameOver.name])
     full_reset()
 
+
+
+func _on_Quit_quit_game() -> void:
+    get_tree().quit(0)

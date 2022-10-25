@@ -55,7 +55,7 @@ func _on_StopTimer_timeout() -> void:
 
 
 func _on_Carro_body_entered(body: Node) -> void:
-    if not is_visible_in_tree() or not is_visible():
+    if not is_visible_in_tree() or not is_visible() or not body.name.to_lower().begins_with("lixo"):
         return
     print("[%s] Body %s has entered this body." % [name, body.name])
     emit_signal("carro_game_over")

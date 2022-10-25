@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://art/lixos/WhatsApp_Image_2022-10-14_at_18.25.14-removebg-preview.png" type="Texture" id=1]
 [ext_resource path="res://art/lixos/WhatsApp_Image_2022-10-14_at_17.48.45-removebg-preview.png" type="Texture" id=2]
 [ext_resource path="res://art/lixos/WhatsApp_Image_2022-10-14_at_17.48.45__1_-removebg-preview.png" type="Texture" id=3]
 [ext_resource path="res://art/lixos/papel-lixo-removebg-preview (1).png" type="Texture" id=4]
+[ext_resource path="res://art/lixos/garrafa-vidro.png" type="Texture" id=5]
 [ext_resource path="res://scripts/Lixos.gd" type="Script" id=6]
 [ext_resource path="res://art/lixos/WhatsApp Image 2022-10-03 at 12.17.53 (1).png" type="Texture" id=7]
 
@@ -28,6 +29,11 @@ animations = [ {
 "loop": true,
 "name": "plastico",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "vidro",
+"speed": 5.0
 } ]
 
 [sub_resource type="CircleShape2D" id=2]
@@ -38,7 +44,7 @@ script = ExtResource( 6 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "papel"
+animation = "vidro"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
