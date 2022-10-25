@@ -9,7 +9,5 @@ Recycle Man - Lixeiro Simulator é um jogo com tema sustentabilidade feito na en
 Para jogar o jogo, instale a engine [Godot](https://godotengine.org/) e clique abra o esse projeto dentro da engine.
 Após isto, clique para jogar.
 
-Feito pelo Sun.
-
 ## Redes
 * Discord: Sun「無用」#6331
