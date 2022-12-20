@@ -19,7 +19,7 @@ func _ready() -> void:
     screen_size = get_viewport_rect().size
 
 
-func _physics_process(_d):
+func _physics_process(delta: float):
     if not is_visible():
         return
     if Input.is_mouse_button_pressed(BUTTON_LEFT) && timesClicked < 1:
@@ -35,21 +35,23 @@ func _physics_process(_d):
         rotation += rotationDir * rotationSpeed
         velocity = (target - position).normalized() * speed
         if (target - position).length() > 5:
-            velocity = move_and_slide(velocity)
+            velocity = move_and_slide(velocity) * delta
 
 
 func new_trash() -> void:
     var pos = randi() % POSSIBLE_TRASH.size()
     $AnimatedSprite.animation = POSSIBLE_TRASH[pos]
+    
 
 
 func reset() -> void:
+    hide()
     new_trash()
     position = DEFAULT_POS
     shouldMove = false
     timesClicked = 0
     rotationDir = 0 
-
+    show()
 
 func _on_MovingTimer_timeout() -> void:
     $MovingTimer.stop()
